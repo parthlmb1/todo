@@ -10,3 +10,10 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+
+/*
+ * Routes for Lists
+ * */
+Route::group([], function() {
+    Route::get("lists", "ListsController@getAllLists");
+});
