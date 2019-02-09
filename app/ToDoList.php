@@ -50,4 +50,28 @@ class ToDoList extends Model
         return $list->save() ? true : false;
     }
 
+    /**
+     * finds the list with given ID
+     * @param $id
+     * @return bool
+     */
+    public static function findListWithID($id)
+    {
+        return !empty(ToDoList::find($id));
+    }
+
+    /**
+     * Update list details
+     * @return bool
+     */
+    public function updateListDetails()
+    {
+        $updateList = ToDoList::where("id", "=", $this->id)
+            ->update([
+                "name" => $this->name,
+                "description" => $this->description
+            ]);
+        return $updateList ? true : false;
+    }
+
 }

@@ -71,4 +71,46 @@ class ListsController extends Controller
             substr($hash, 32, 12)
         );
     }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function updateListDetails(Request $request)
+    {
+
+        if (empty($request->all())) {
+            return response()->json(["success" => false, "message" => "Request is empty"], 422);
+        }
+
+        if (empty($request->id)) {
+            return response()->json(["success" => false, "message" => "List ID is required"], 422);
+        }
+
+
+        if (!ToDoList::findListWithID($request->id)) {
+            return response()->json(["success" => false, "message" => "Invalid List ID"], 422);
+        }
+
+        if (empty($request->name)) {
+            return response()->json(["success" => false, "message" => "List Name id required"], 422);
+        }
+
+        if (empty($request->description)) {
+            return response()->json(["success" => false, "message" => "List description is required"], 422);
+        }
+
+        $list = new ToDoList(
+            $request->id,
+            $request->name,
+            $request->description
+        );
+
+        if ($list->updateListDetails()) {
+            return response()->json(["success" => false, "message" => "List updated"], 200);
+        }
+
+        return response()->json(["success" => false, "message" => "List could not be updated"], 422);
+    }
+
 }
