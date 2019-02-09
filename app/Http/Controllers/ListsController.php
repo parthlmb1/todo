@@ -4,22 +4,30 @@ namespace App\Http\Controllers;
 
 use App\ToDoList;
 use Illuminate\Http\Request;
-use phpDocumentor\Reflection\Types\Integer;
-use Symfony\Component\Translation\Catalogue\TargetOperation;
 
 class ListsController extends Controller
 {
 
+    /**
+     * @return \Illuminate\Contracts\View\Factory|\Illuminate\View\View
+     */
     public function showListsView()
     {
         return view("Lists.lists");
     }
 
+    /**
+     * @return ToDoList[]|\Illuminate\Database\Eloquent\Collection
+     */
     public function getAllLists()
     {
         return ToDoList::getAllToDoLists();
     }
 
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function createNewList(Request $request)
     {
 
@@ -48,6 +56,9 @@ class ListsController extends Controller
         return response()->json(["success" => false, "message" => "List could not be created"], 422);
     }
 
+    /**
+     * @return string
+     */
     private function generateUUID()
     {
         $hash = sha1("RandomTextPrivateKey", false);

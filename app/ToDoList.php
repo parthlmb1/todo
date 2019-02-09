@@ -11,6 +11,8 @@ class ToDoList extends Model
 
     protected $fillable = ["name", "description", "status", "created_at", "updated_at", "deleted_at"];
 
+    protected $hidden = ["deleted_at"];
+
     private $id;
     private $name;
     private $description;
