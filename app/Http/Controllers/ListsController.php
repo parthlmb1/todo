@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\ToDoList;
 use Illuminate\Http\Request;
+use phpDocumentor\Reflection\Types\Integer;
 use Symfony\Component\Translation\Catalogue\TargetOperation;
 
 class ListsController extends Controller
@@ -49,7 +50,7 @@ class ListsController extends Controller
 
     private function generateUUID()
     {
-        $hash = sha1("ParthLambaPrivateKey", false);
+        $hash = sha1("RandomTextPrivateKey", false);
         return sprintf(
             '%s-%s-5%s-%s-%s',
             substr($hash, 0, 8),
