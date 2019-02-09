@@ -16,9 +16,9 @@ class ToDoList extends Model
     private $description;
     private $status;
 
-    public function __construct(array $attributes = [], $id = "", $name = "", $description = "")
+    public function __construct($id = "", $name = "", $description = "")
     {
-        parent::__construct($attributes);
+        parent::__construct();
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
@@ -34,16 +34,18 @@ class ToDoList extends Model
         return ToDoList::all();
     }
 
+    /**
+     * saves list in DB
+     * @return bool
+     */
     public function saveList()
     {
-        $list = ToDoList::create([
-            "id" => $this->id,
-            "name" => $this->name,
-            "description" => $this->description,
-            "status" => $this->status
-        ]);
-
-        return $list ? true : false;
+        $list = new ToDoList();
+        $list->id = $this->id;
+        $list->name = $this->name;
+        $list->description = $this->description;
+        $list->status = $this->status;
+        return $list->save() ? true : false;
     }
 
 }
