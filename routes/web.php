@@ -14,6 +14,10 @@
 /*
  * Routes for Lists
  * */
-Route::group([], function() {
-    Route::get("lists", "ListsController@getAllLists");
+Route::group([], function () {
+
+    Route::get("lists", "ListsController@showListsView");   // Shows List View
+    Route::get("lists/all", "ListsController@getAllLists"); // Gets All Lists Data
+    Route::post("list", "ListsController@createNewList");   // Create a new List
+
 });
