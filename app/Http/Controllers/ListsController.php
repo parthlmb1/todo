@@ -21,7 +21,7 @@ class ListsController extends Controller
      */
     public function getAllLists()
     {
-        return ToDoList::getAllToDoLists();
+        return [ "data" => ToDoList::getAllToDoLists()];
     }
 
     /**

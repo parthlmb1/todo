@@ -17,48 +17,86 @@
     <link href="https://fonts.googleapis.com/css?family=PT+Sans" rel="stylesheet">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet">
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
     <style>
         html, body {
             font-family: 'PT Sans', sans-serif;
             background-color: #fafafa;
+            /*margin: 0;*/
+            /*padding: 0;*/
         }
+
+        .to_do_lists {
+            margin: 20px 20px;
+        }
+
+        table th {
+            margin-top: 20px;
+            padding: 10px 10px;
+            letter-spacing: 2px;
+            background-color: #37474f;
+            color: #fff;
+        }
+
+        table th:first-child{
+            border-radius: 5px 0 0 0;
+        }
+
+        table th:last-child{
+            border-radius:0 10px 0 0;
+        }
+
     </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="col-md-12 to_do_lists" style="width:100%;">
+<div class="header">
 
+    <div class="title">
+        <h2>
+
+            Dashboard
+
+        </h2>
+    </div>
+
+</div>
+
+<div class="container">
+    <div class="col-md-12 to_do_lists">
+        <table id="list_table" class="stripe row-border hover cell-border">
+            <thead style="margin-top: 20px">
+                <tr>
+                    <th>S.No</th>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Status</th>
+                    <th>Date Time</th>
+                </tr>
+            </thead>
+        </table>
     </div>
 </div>
 
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
 <script>
+
     $(document).ready(function () {
-        $.ajax({
-            url: '{{url("lists/all")}}',
-            method: "GET",
-            success: function (data) {
-                let listsCount = data.length;
-                for (let count = 0; count < listsCount; count += 1) {
-                    let htmlString =
-                        "<div class='col-sm-4' style='margin:20px; padding:20px; display:inline-block; height:250px; border-radius: 10px; box-shadow: 1px 1px 5px'>" +
-                        "<div class='col-sm-12' style='font-size:24px;color:#616161'>" +
-                        "<h4>" + data[count]["name"] + "</h4>" +
-                        "<p style='text-align:right;margin-top:-65px;padding-top:5px;'> <i class='material-icons'>add_circle_outline</i> </p>" +
-                        "</div>" +
-                        "<div>" +
-                        "<p style='font-size:18px;color:#757575'>" + data[count]["description"] + "</p>" +
-                        "</div>" +
-                        "</div>";
-                    $(".to_do_lists").append(htmlString);
-                }
-            },
-            error: function () {
-                console.log("Error");
-            }
+        $('#list_table').dataTable({
+            ajax: '{{url("lists/all")}}',
+            dataSrc: 'data',
+            columns: [
+                {data : 'id'},
+                {data : 'name'},
+                {data : 'description'},
+                {data : 'status'},
+                {data : 'created_at'},
+            ]
         });
+
+        $("#list_table_length").css("margin-bottom", "20px")
     });
 </script>
 </html>
